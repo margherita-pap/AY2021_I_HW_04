@@ -17,6 +17,7 @@ int32 value_mV_photoR;
 
 CY_ISR(Custom_ISR_ADC){
    if(SendByteFlag){
+    AMux_Select(0);
     TimerADC_ReadStatusRegister();
     value_digit_photoR = ADC_DelSig_Read32();
     if(value_digit_photoR<0)

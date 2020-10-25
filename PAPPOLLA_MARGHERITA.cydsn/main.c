@@ -17,8 +17,8 @@ int main(void)
 {
     CyGlobalIntEnable; /* Enable global interrupts. */
     UART_Start();
-    TimerADC_Start();
-    //AMux_Start();
+    
+    AMux_Start();
     ADC_DelSig_Start();
     isr_UART_Rx_StartEx(Custom_ISR_RX);
     isr_ADC_StartEx(Custom_ISR_ADC);
