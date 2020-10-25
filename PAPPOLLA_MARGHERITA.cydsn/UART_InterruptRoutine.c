@@ -24,22 +24,14 @@ CY_ISR_PROTO(Custom_ISR_RX){
         case 'B' :
         case 'b':
             SendByteFlag=1;
-            //prova poi da togliere
-            /*char message[20];
-            sprintf(message, "Received:%c \r\n", ch_received);
-            UART_PutString(message);*/
-            
             Pin_LED_onboard_Write(LED_ON);
-            //TimerADC_Start();
+            TimerADC_Start();
             break;
         case 'S':
         case 's':
             SendByteFlag=0;
-            
-            /*sprintf(message, "Received:%c \r\n", ch_received);
-            UART_PutString(message);*/
             Pin_LED_onboard_Write(LED_OFF);
-            //TimerADC_Stop();
+            TimerADC_Stop();
             break;
         default:
             break;
