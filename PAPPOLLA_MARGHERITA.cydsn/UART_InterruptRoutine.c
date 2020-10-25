@@ -11,10 +11,7 @@
 */
 #include "UART_InterruptRoutine.h"
 
-#define HIGH 1
-#define LOW 0
-#define LED_ON HIGH
-#define LED_OFF LOW
+
 
 uint8_t ch_received;
 

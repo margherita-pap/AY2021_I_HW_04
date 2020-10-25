@@ -18,7 +18,8 @@
     #include "TimerADC.h"
     #define TRANSMIT_BUFFER_SIZE 16
     CY_ISR_PROTO(Custom_ISR_ADC);
-    char DataBuffer[TRANSMIT_BUFFER_SIZE];
+    char DataBuffer_photoR[TRANSMIT_BUFFER_SIZE];
+    char DataBuffer_potentiometer[TRANSMIT_BUFFER_SIZE];
     volatile uint8 PacketReadyFlag;
 #endif
 

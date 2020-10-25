@@ -9,23 +9,47 @@
  *
  * ========================================
 */
+#include "project.h"
 #include "ADC_InterruptRoutine.h"
 #include "UART_InterruptRoutine.h"
 
 int32 value_digit_photoR;
 int32 value_mV_photoR;
+int32 value_digit_potentiometer;
+uint8_t flag;
 
 CY_ISR(Custom_ISR_ADC){
    if(SendByteFlag){
-    AMux_Select(0);
-    TimerADC_ReadStatusRegister();
-    value_digit_photoR = ADC_DelSig_Read32();
+     TimerADC_ReadStatusRegister();
+    if(flag==0){
+        AMux_Select(0);
+        value_digit_photoR = ADC_DelSig_Read32();
     if(value_digit_photoR<0)
         value_digit_photoR=0;
     if(value_digit_photoR>65535)
         value_digit_photoR=65535;
         value_mV_photoR= ADC_DelSig_CountsTo_mVolts(value_digit_photoR);
-        sprintf(DataBuffer,"Sample: %ld mV \r\n", value_mV_photoR);
+        sprintf(DataBuffer_photoR,"Sample: %ld mV \r\n", value_mV_photoR);
+        if(value_mV_photoR>=2500){
+            PWM_LED_WriteCompare(0);
+        }
+        else{
+            PWM_LED_WriteCompare(65535);
+            flag=1;
+            AMux_Select(1);
+           
+        }
+    }
+    else{ 
+        value_digit_potentiometer=ADC_DelSig_Read32();
+        if(value_digit_potentiometer<0)
+                value_digit_potentiometer=0;
+        if(value_digit_potentiometer>65535)
+                value_digit_potentiometer=65535;
+        //PWM_LED_WriteCompare(value_digit_potentiometer);
+        sprintf(DataBuffer_potentiometer,"Sample: %ld \r\n", value_digit_potentiometer);
+        flag=0;
+    }
         PacketReadyFlag=1;
     }
 }
