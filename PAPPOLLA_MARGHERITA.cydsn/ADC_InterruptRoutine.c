@@ -21,7 +21,6 @@ uint8_t flag;
 CY_ISR(Custom_ISR_ADC){
    if(SendByteFlag){
      TimerADC_ReadStatusRegister();
-    if(flag==0){
         AMux_Select(0);
         value_digit_photoR = ADC_DelSig_Read32();
     if(value_digit_photoR<0)
@@ -34,22 +33,22 @@ CY_ISR(Custom_ISR_ADC){
             PWM_LED_WriteCompare(0);
         }
         else{
-            PWM_LED_WriteCompare(65535);
+            PWM_LED_WriteCompare(255);
             flag=1;
             AMux_Select(1);
-           
-        }
-    }
-    else{ 
-        value_digit_potentiometer=ADC_DelSig_Read32();
+            value_digit_potentiometer=ADC_DelSig_Read32();
         if(value_digit_potentiometer<0)
                 value_digit_potentiometer=0;
         if(value_digit_potentiometer>65535)
                 value_digit_potentiometer=65535;
-        //PWM_LED_WriteCompare(value_digit_potentiometer);
+        uint8_t settaggio_PWM;
+        settaggio_PWM= (value_digit_potentiometer*255)/65535;
+        PWM_LED_WriteCompare(settaggio_PWM);
         sprintf(DataBuffer_potentiometer,"Sample: %ld \r\n", value_digit_potentiometer);
-        flag=0;
-    }
+        flag=1;
+           
+        }
+    
         PacketReadyFlag=1;
     }
 }
