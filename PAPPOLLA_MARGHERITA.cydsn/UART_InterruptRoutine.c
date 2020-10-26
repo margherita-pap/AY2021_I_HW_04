@@ -29,6 +29,7 @@ CY_ISR_PROTO(Custom_ISR_RX){
             SendByteFlag=0;
             Pin_LED_onboard_Write(LED_OFF);
             TimerADC_Stop();
+            PWM_LED_Init();
             break;
         default:
             break;

@@ -13,9 +13,7 @@
     #define __UART_INTERRUPTROUTINE_H_
     #include "cytypes.h"
     #include "stdio.h"
-    #include "UART.h"
-    #include "Pin_LED_onboard.h"
-    #include "TimerADC.h"
+    #include "project.h"
     CY_ISR_PROTO (Custom_ISR_RX);
     
     volatile uint8_t SendByteFlag;

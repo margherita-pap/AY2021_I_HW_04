@@ -32,6 +32,7 @@ int main(void)
         UART_PutString(DataBuffer_photoR);
         if(flag){
             UART_PutString(DataBuffer_potentiometer);
+            flag=0;
             
         }    
         PacketReadyFlag=0;
