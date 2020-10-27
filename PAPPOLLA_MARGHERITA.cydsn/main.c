@@ -12,8 +12,8 @@
 #include "project.h"
 #include "UART_InterruptRoutine.h"
 #include "ADC_InterruptRoutine.h"
-extern uint8_t flag;
-
+extern uint8_t flag_LED_on;
+extern uint8_t flag_LED_off;
 int main(void)
 {
     CyGlobalIntEnable; /* Enable global interrupts. */
@@ -25,16 +25,25 @@ int main(void)
     isr_ADC_StartEx(Custom_ISR_ADC);
     PacketReadyFlag=0;
     ADC_DelSig_StartConvert();
-    flag=0;
+    DataBuffer[0]=0xA0;
+    DataBuffer[TRANSMIT_BUFFER_SIZE-1]=0xC0;
+    flag_LED_on=0;
+    flag_LED_off=0;
     for(;;)
     { 
         if(PacketReadyFlag==1){
-        UART_PutString(DataBuffer_photoR);
-        if(flag){
-            UART_PutString(DataBuffer_potentiometer);
-            flag=0;
-            
-        }    
+            if(flag_LED_off){
+                DataBuffer[3]=0x00;
+                DataBuffer[4]=0x00;
+                UART_PutArray(DataBuffer,TRANSMIT_BUFFER_SIZE);
+                flag_LED_off=0;
+            }
+        
+            if(flag_LED_on){
+            UART_PutArray(DataBuffer,TRANSMIT_BUFFER_SIZE);
+            flag_LED_off=0;
+            }  
+           
         PacketReadyFlag=0;
     }
    }

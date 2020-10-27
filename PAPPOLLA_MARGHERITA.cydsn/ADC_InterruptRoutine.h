@@ -13,14 +13,14 @@
     #define __ADC_INTERRUPT_ROUTINE_H_
     #include "cytypes.h"
     #include "stdio.h"
-    #include "ADC_DelSig.h"
-    #include "AMux.h"
-    #include "TimerADC.h"
-    #define TRANSMIT_BUFFER_SIZE 16
+    #include "project.h"
+    #define BYTE_TO_SEND 4
+    #define TRANSMIT_BUFFER_SIZE 1+BYTE_TO_SEND +1
     CY_ISR_PROTO(Custom_ISR_ADC);
-    char DataBuffer_photoR[TRANSMIT_BUFFER_SIZE];
-    char DataBuffer_potentiometer[TRANSMIT_BUFFER_SIZE];
+    uint8_t DataBuffer[TRANSMIT_BUFFER_SIZE];
     volatile uint8 PacketReadyFlag;
 #endif
 
+#define CH_PHOTORESISTOR 0
+#define CH_POTENTIOMETER 1
 /* [] END OF FILE */

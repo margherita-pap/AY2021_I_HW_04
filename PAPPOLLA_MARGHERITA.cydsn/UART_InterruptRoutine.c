@@ -11,8 +11,6 @@
 */
 #include "UART_InterruptRoutine.h"
 
-
-
 uint8_t ch_received;
 
 CY_ISR_PROTO(Custom_ISR_RX){
