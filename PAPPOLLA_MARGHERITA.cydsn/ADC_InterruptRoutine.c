@@ -16,8 +16,6 @@
 int32 value_digit_photoR;
 int32 value_mV_photoR;
 int32 value_digit_potentiometer;
-uint8_t flag_LED_on;
-uint8_t flag_LED_off;
 
 CY_ISR(Custom_ISR_ADC){
    if(SendByteFlag){
@@ -33,7 +31,7 @@ CY_ISR(Custom_ISR_ADC){
         value_mV_photoR= ADC_DelSig_CountsTo_mVolts(value_digit_photoR);
         if(value_mV_photoR>=2500){
             PWM_LED_WriteCompare(0);
-            flag_LED_off=1;
+            Flag_LED_on=0;
         }
         else{
             PWM_LED_WriteCompare(255);
@@ -50,7 +48,7 @@ CY_ISR(Custom_ISR_ADC){
             settaggio_PWM= (value_digit_potentiometer*255)/65535;
             PWM_LED_WriteCompare(settaggio_PWM);
      
-            flag_LED_on=1;
+            Flag_LED_on=1;
             }
     
         PacketReadyFlag=1;

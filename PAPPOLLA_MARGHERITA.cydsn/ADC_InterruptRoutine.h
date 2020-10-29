@@ -19,6 +19,7 @@
     CY_ISR_PROTO(Custom_ISR_ADC);
     uint8_t DataBuffer[TRANSMIT_BUFFER_SIZE];
     volatile uint8 PacketReadyFlag;
+    volatile uint8_t Flag_LED_on;
 #endif
 
 #define CH_PHOTORESISTOR 0
