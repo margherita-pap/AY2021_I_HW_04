@@ -20,6 +20,7 @@
     uint8_t DataBuffer[TRANSMIT_BUFFER_SIZE];
     volatile uint8 PacketReadyFlag;
     volatile uint8_t Flag_LED_on;
+    volatile uint8_t Flag_LED_off;
 #endif
 
 #define CH_PHOTORESISTOR 0

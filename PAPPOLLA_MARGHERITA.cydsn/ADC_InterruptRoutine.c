@@ -31,7 +31,7 @@ CY_ISR(Custom_ISR_ADC){
         value_mV_photoR= ADC_DelSig_CountsTo_mVolts(value_digit_photoR);
         if(value_mV_photoR>=2500){
             PWM_LED_WriteCompare(0);
-            Flag_LED_on=0;
+            Flag_LED_off=1;
         }
         else{
             PWM_LED_WriteCompare(255);

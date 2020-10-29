@@ -33,14 +33,17 @@ int main(void)
     for(;;)
     { 
         if(PacketReadyFlag==1){
-            if(!Flag_LED_on){
+            if(Flag_LED_off==1){
                 DataBuffer[3]=0x00;
                 DataBuffer[4]=0x00;
                 UART_PutArray(DataBuffer,TRANSMIT_BUFFER_SIZE);
+                Flag_LED_off=0;
             }
         
-            if(Flag_LED_on){
+            if(Flag_LED_on==1){
             UART_PutArray(DataBuffer,TRANSMIT_BUFFER_SIZE);
+            Flag_LED_on=0;
+            
             }  
            
         PacketReadyFlag=0;
