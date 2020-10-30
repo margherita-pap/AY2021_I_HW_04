@@ -57,7 +57,6 @@ int main(void)
             UART_PutArray(DataBuffer,TRANSMIT_BUFFER_SIZE);
             Flag_LED_on=0;
             }  
-           
         PacketReadyFlag=0;
     }
    }
