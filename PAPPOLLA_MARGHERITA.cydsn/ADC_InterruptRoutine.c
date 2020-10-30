@@ -17,15 +17,22 @@ int32 value_digit_photoR;
 int32 value_mV_photoR;
 int32 value_digit_potentiometer;
 
+int32 ReadDataConverted(int32 variable){
+    variable=ADC_DelSig_Read32();
+    if(variable<0)
+        variable=0;
+    if(variable>ADC_MAX_OUTPUT)
+        variable= ADC_MAX_OUTPUT;
+    return variable;
+ }    
+
 CY_ISR(Custom_ISR_ADC){
+    int32 variable=0;
    if(SendByteFlag){
         TimerADC_ReadStatusRegister();
         AMux_Select(CH_PHOTORESISTOR);
-        value_digit_photoR = ADC_DelSig_Read32();
-    if(value_digit_photoR<0)
-        value_digit_photoR=0;
-    if(value_digit_photoR>65535)
-        value_digit_photoR=65535;
+        
+        value_digit_photoR=ReadDataConverted(variable);
         DataBuffer[1]=value_digit_photoR>>8;
         DataBuffer[2]=value_digit_photoR&0xFF;
         value_mV_photoR= ADC_DelSig_CountsTo_mVolts(value_digit_photoR);
@@ -34,14 +41,9 @@ CY_ISR(Custom_ISR_ADC){
             Flag_LED_off=1;
         }
         else{
-            PWM_LED_WriteCompare(255);
-            
+            PWM_LED_WriteCompare(PERIOD_PWM);
             AMux_Select(CH_POTENTIOMETER);
-            value_digit_potentiometer=ADC_DelSig_Read32();
-            if(value_digit_potentiometer<0)
-                value_digit_potentiometer=0;
-            if(value_digit_potentiometer>65535)
-                value_digit_potentiometer=65535;
+            value_digit_potentiometer=ReadDataConverted(variable);
             DataBuffer[3]=value_digit_potentiometer>>8;
             DataBuffer[4]=value_digit_potentiometer&0xFF;
             uint8_t settaggio_PWM;
@@ -54,6 +56,12 @@ CY_ISR(Custom_ISR_ADC){
         PacketReadyFlag=1;
     }
 }
+
+
+    
+    
+    
+    
         
         
 

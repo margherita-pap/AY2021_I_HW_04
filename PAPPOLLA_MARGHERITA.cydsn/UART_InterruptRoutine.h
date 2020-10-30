@@ -15,7 +15,7 @@
     #include "stdio.h"
     #include "project.h"
     CY_ISR_PROTO (Custom_ISR_RX);
-    
+    // This variable goes high if the UART receive the start command 'b' or 'B'
     volatile uint8_t SendByteFlag;
 #endif    
 
